@@ -27,7 +27,6 @@ const SingleManagerPage = () => {
     salary: '',
     aadharNo: '',
     joiningDate: '',
-    status: 'active',
     // managerID: '', // Initialize managerID in state
   });
 
@@ -157,24 +156,6 @@ const SingleManagerPage = () => {
               required
               disabled
             />
-            <label>Password</label>
-            <div className={styles.passwordContainer}>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                minLength="8"
-                pattern="(?=.*[a-zA-Z])(?=.*[0-9]).{8,}"
-                title="Password must be at least 8 characters long and contain at least one letter and one number."
-              />
-              <span
-                className={styles.eyeIcon}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
-              </span>
-            </div>
             <label>Contact <span className={styles.requiredStar}>*</span></label>
             <input
               type="text"
@@ -235,26 +216,6 @@ const SingleManagerPage = () => {
                 />
               </div>
             </div>
-            {/* <label>ManagerID <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="number"
-              name="managerID"
-              value={formData.managerID}
-              onChange={handleChange}
-              required
-              disabled
-            /> */}
-            <label>Status <span className={styles.requiredStar}>*</span></label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              required
-            >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="on_leave">On Leave</option>
-            </select>
             <button type="submit" className={styles.updateButton}>Submit</button>
           </form>
         </div>

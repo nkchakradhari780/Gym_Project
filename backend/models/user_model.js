@@ -16,6 +16,8 @@ const userSchema = mongoose.Schema({
     weight: Number,
     age: Number,
     startDate: Date,
+    salary: Number ,
+    aadharNo: String,
     endDate: Date,
     gender: {
         type: String,

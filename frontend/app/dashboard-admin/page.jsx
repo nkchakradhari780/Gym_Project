@@ -4,7 +4,6 @@ import Card from "../ui/dashboard/card/card";
 import Rightbar from "../ui/dashboard/rightbar/rightbar";
 import Transactions from "../ui/dashboard/transactions/transactions";
 import Chart from "../ui/dashboard/chart/chart";
-import styles from "../ui/dashboard/dashboard.module.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -23,39 +22,29 @@ const DashboardAdmin = () => {
         const response = await axios.get("http://localhost:3001/owner/count", {
           withCredentials: true,
         });
-
-        if (response.data) {
-          console.log("Response Data:", response.data);
-          setCount({
-            totalManagers: response.data.managerCount,
-            totalTrainers: response.data.trainerCount,
-            totalMembers: response.data.customerCount,
-          });
-          setError(null);
-        }
-      } catch (error) {
-        console.error("Error fetching count details:", error);
+        setCount({
+          totalManagers: response.data.managerCount,
+          totalTrainers: response.data.trainerCount,
+          totalMembers: response.data.customerCount,
+        });
+        setError(null);
+      } catch (err) {
         setError("Failed to load data");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchCountDetails(); // Call the function inside the `useEffect`
+    fetchCountDetails();
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <div className={styles.error}>{error}</div>;
-  }
+  if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.main}>
-        <div className={styles.cards}>
+    <div className="flex flex-col md:flex-row mt-6 gap-6">
+      {/* Main Content */}
+      <div className="flex-[3] flex flex-col gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card title="Total Managers" number={count.totalManagers} />
           <Card title="Total Trainers" number={count.totalTrainers} />
           <Card title="Total Members" number={count.totalMembers} />
@@ -63,7 +52,9 @@ const DashboardAdmin = () => {
         <Transactions />
         {/* <Chart /> */}
       </div>
-      <div className={styles.side}>
+
+      {/* Rightbar */}
+      <div className="flex-1 hidden xl:block">
         {/* <Rightbar /> */}
       </div>
     </div>

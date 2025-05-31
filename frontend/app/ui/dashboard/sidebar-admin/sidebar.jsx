@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from "./sidebar.module.css";
 import Image from 'next/image';
 import MenuLink from './menuLink/menuLink';
 
@@ -78,74 +77,73 @@ const SidebarAdmin = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // useEffect(() => {
-    //     const fetchAdminDetails = async () => {
-    //         try{ 
-    //             const response = await axios.get('http://localhost:3001/owner', {
-    //                 withCredentials: true,
-    //             });
+    useEffect(() => {
+        const fetchAdminDetails = async () => {
+            try { 
+                const response = await axios.get('http://localhost:3001/owner', {
+                    withCredentials: true,
+                });
 
-    //             if(response.data) {
-    //                 // console.log('Response Data Sidebar:', response.data);
-    //                 setAdminDetails(response.data.owner);
-    //             } else {
-    //                 console.error('No data returned from API');
-    //                 setError('No data returned from API');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching Admin Details:', error.message);
-    //             setError(error.message);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
+                if (response.data) {
+                    setAdminDetails(response.data.owner);
+                } else {
+                    setError('No data returned from API');
+                }
+            } catch (error) {
+                console.error('Error fetching Admin Details:', error.message);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    //     fetchAdminDetails();
-    // }, []);
+        fetchAdminDetails();
+    }, []);
 
     const handleLogout = async () => {
         try {
             await axios.post('http://localhost:3001/logout', {}, { withCredentials: true });
-            window.location.href = '/'; // Redirect to login or home page after logout
+            window.location.href = '/';
         } catch (error) {
             console.error('Error logging out:', error.message);
             setError('Failed to log out');
         }
     };
 
-    if(loading) {
-        return <p>Loading...</p>;
-    }
-
-    if(error) {
-        return <p>Error: {error}</p>;
-    }
-
-    if(!adminDetails) {
-        return <p>No Admin Details found</p>;
-    }
+    if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+    if (error) return <p className="text-center text-red-500">Error: {error}</p>;
+    if (!adminDetails) return <p className="text-center text-gray-500">No Admin Details found</p>;
 
     return (
-        <div className={styles.container}>
-            <div className={styles.user}>
-                <Image className={styles.userImage} src="/images/noavtar.png" alt="" width="50" height="50" />
-                <div className={styles.userDetail}>
-                    <span className={styles.username}>{adminDetails.fullName}</span>
-                    <span className={styles.userTitle}>{adminDetails.role}</span>
+        <div className="sticky top-10 p-4 w-full max-w-xs">
+            {/* Admin Info */}
+            <div className="flex items-center gap-4 mb-6">
+                <Image src="/images/noavtar.png" alt="Avatar" width={50} height={50} className="rounded-full object-cover" />
+                <div className="flex flex-col">
+                    <span className="font-medium">{adminDetails.fullName}</span>
+                    <span className="text-xs text-gray-400">{adminDetails.role}</span>
                 </div>
             </div>
 
-            <ul className={styles.list}>
+            {/* Menu List */}
+            <ul className="space-y-4">
                 {menuItems.map((cat) => (
                     <li key={cat.title}>
-                        <span className={styles.cat}>{cat.title}</span>
-                        {cat.list.map((item) => (
-                            <MenuLink item={item} key={item.title} />
-                        ))}
+                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{cat.title}</span>
+                        <ul className="mt-2 space-y-2">
+                            {cat.list.map((item) => (
+                                <MenuLink item={item} key={item.title} />
+                            ))}
+                        </ul>
                     </li>
                 ))}
             </ul>
-            <button className={styles.logoutbtn} onClick={handleLogout}>
+
+            {/* Logout Button */}
+            <button
+                onClick={handleLogout}
+                className="mt-6 flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
                 <MdLogout />
                 Logout
             </button>

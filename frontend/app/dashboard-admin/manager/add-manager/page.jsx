@@ -55,7 +55,6 @@ const AddManagerPage = () => {
       salary,
       joinDate,
       aadharNo,
-      status,
       managerId,
     } = formData;
 
@@ -73,7 +72,6 @@ const AddManagerPage = () => {
           salary,
           joinDate,
           aadharNo, // Include aadharNo in the request
-          status,
           managerId,
         },
         {
@@ -227,20 +225,6 @@ const AddManagerPage = () => {
               placeholder="12-digit Aadhar Number"
               required
             />
-
-            <label>
-              Status <span className={styles.requiredStar}>*</span>
-            </label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              required
-            >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="on_leave">On Leave</option>
-            </select>
 
             <button type="submit" className={styles.updateButton}>
               Submit

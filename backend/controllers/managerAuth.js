@@ -1,13 +1,13 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const managerModel = require("../models/manager_model");
+const userModel = require("../models/user_model");
 const { generateToken } = require("../utils/generatetoken");
 
 module.exports.loginManager = async (req, res) => {
   try {
     let { email, password } = req.body;
 
-    let manager = await managerModel.findOne({ email });
+    let manager = await userModel.findOne({ email });
     // Changed 'trainer' to 'manager' for the correct variable
     if (!manager) return res.status(401).send("Email or password is incorrect");
 
@@ -36,9 +36,9 @@ module.exports.updateManager = async (req, res) => {
   try {
     let { salary, address, contact, email, status } = req.body;
 
-    let manager = await managerModel.findOneAndUpdate(
+    let manager = await userModel.findOneAndUpdate(
       { email },
-      { salary, address, contact, status },
+      { salary, address, contact},
       { new: true }
     );
     if (!manager) return res.status(401).send("Something went wrong");
@@ -55,7 +55,7 @@ module.exports.deleteManager = async (req, res) => {
     const { id } = req.params; // Get manager ID from the URL params
 
     // Find and delete the manager by ID
-    let manager = await managerModel.findByIdAndDelete(id);
+    let manager = await userModel.findByIdAndDelete(id);
 
     // If no manager is found, return a 404 response
     if (!manager) {
@@ -88,7 +88,7 @@ module.exports.registerManager = async (req, res) => {
 
     console.log(status);
 
-    let existingManager = await managerModel.findOne({ email });
+    let existingManager = await userModel.findOne({ email });
     if (existingManager) return res.status(401).send("Manager already exists.");
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -98,7 +98,7 @@ module.exports.registerManager = async (req, res) => {
             .status(500)
             .send("Error occurred while hashing the password");
         else {
-          let newManager = await managerModel.create({
+          let newManager = await userModel.create({
             fullName,
             email,
             contact,
@@ -109,6 +109,7 @@ module.exports.registerManager = async (req, res) => {
             managerId,
             status,
             password: hash,
+            role: 'manager'
           });
           console.log(newManager);
           res.send("Manager registered successfully");
@@ -123,9 +124,9 @@ module.exports.registerManager = async (req, res) => {
 
 module.exports.listManagers = async (req, res) => {
   try {
-    let managerList = await managerModel.find();
+    let managerList = await userModel.find({role: 'manager'});
     
-    let totalManagers = await managerModel.countDocuments();
+    let totalManagers = await userModel.countDocuments({role: 'manager'});
 
     res.status(200).json({
       total: totalManagers,
@@ -141,7 +142,7 @@ module.exports.managerDetails = async (req,res) => {
   try {
     const email = req.email;
 
-    let manager = await managerModel.findOne({email})
+    let manager = await userModel.findOne({email})
     if(!manager){
       return res
         .status(404)
@@ -164,7 +165,7 @@ module.exports.getManagerDetails = async (req, res) => {
     let managerId = req.params.id;
 
     // Find the manager by id
-    let manager = await managerModel.findById(managerId);
+    let manager = await userModel.findById(managerId);
     
     // If manager is not found, return a 404 response
     if (!manager) {

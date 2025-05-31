@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/app/ui/dashboard/managers/managers.module.css';
-import Search from '@/app/ui/dashboard/search/search';
 import Pagination from '@/app/ui/dashboard/pagination/pagination';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -45,9 +44,9 @@ const ManagerPage = () => {
                 const response = await axios.get('http://localhost:3001/owner/manager', {
                     withCredentials: true,
                 });
+                console.log('Response Data:', response.data);
 
                 if (response.data && response.data.managers) {
-                    console.log('Response Data:', response.data.managers);
                     setManagerList(response.data.managers); // Assuming `managers` is the key in the API response
                 } else {
                     console.log('No data returned from API');
@@ -87,7 +86,7 @@ const ManagerPage = () => {
                         <th>Email</th>
                         <th>Age</th>
                         <th>Contact</th>
-                        <th>Status</th>
+                        <th>Salary</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -110,14 +109,7 @@ const ManagerPage = () => {
                                 <td>{manager.email}</td>
                                 <td>{manager.age}</td> {/* Adjust if there's a specific DOB field */}
                                 <td>{manager.contact}</td>
-                                <td>
-                                    <button
-                                        className={`${styles.button} ${manager.isActive ? styles.active : styles.inactive}`}
-                                        onClick={toggleStatus}
-                                    >
-                                        {manager.status}
-                                    </button>
-                                </td>
+                                <td>{manager.salary}</td>
                                 <td>
                                     <div className={styles.buttons}>
                                         <Link href={`/dashboard-admin/manager/update/${manager._id}`}>
