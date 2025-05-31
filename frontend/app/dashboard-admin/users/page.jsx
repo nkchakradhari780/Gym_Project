@@ -1,42 +1,27 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios"; // Make sure axios is imported
-import styles from "@/app/ui/dashboard/users/users.module.css";
-import Search from "@/app/ui/dashboard/search/search";
+import axios from "axios";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import { useState, useEffect } from "react";
 
-
 const UsersPage = () => {
-  const [isActive, setIsActive] = useState(true); // Default to active
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [customerList, setCustomerList] = useState([]);
 
-  // Function to toggle user status
-  const toggleStatus = () => {
-    setIsActive(!isActive);
-  };
-
   useEffect(() => {
     const fetchCustomerList = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3001/owner/customer",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get("http://localhost:3001/owner/customer", {
+          withCredentials: true,
+        });
         if (response.data && response.data.customers) {
-          console.log("Response Data:", response.data.customers);
           setCustomerList(response.data.customers);
         } else {
-          console.log("No data returned from API");
           setError("No data returned from API");
         }
       } catch (error) {
-        console.error("Error fetching Users List", error.message);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -49,110 +34,113 @@ const UsersPage = () => {
   const deleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this User?")) {
       try {
-        const response = await axios.delete(`http://localhost:3001/owner/customer/${userId}`, {
-          withCredentials: true,
-        });
+        const response = await axios.delete(
+          `http://localhost:3001/owner/customer/${userId}`,
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.status === 200) {
-          setCustomerList(
-            customerList.filter((customer) => customer._id !== userId)
-          );
+          setCustomerList(customerList.filter((c) => c._id !== userId));
           alert("User Deleted Successfully");
         }
       } catch (error) {
         setError("Error deleting User");
-        console.error("Error deleting user", error);
       }
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (loading) return <div className="text-white p-4">Loading...</div>;
+  if (error) return <div className="text-red-500 p-4">Error: {error}</div>;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
+    <div className="p-4 sm:p-6 md:p-8 bg-gray-950 min-h-screen text-white mt-5">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+        <h1 className="text-2xl font-semibold">User Management</h1>
         <Link href="/dashboard-admin/users/add-user">
-          <button className={styles.addButton}>Add New</button>
+          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+            Add New
+          </button>
         </Link>
       </div>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Plan</th>
-            <th>Expiration</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customerList.length > 0 ? (
-            customerList.map((customer) => (
-              <tr key={customer._id}>
-                <td>
-                  <div className={styles.user}>
+
+      <div className="overflow-x-auto rounded-lg shadow border border-gray-800">
+        <table className="min-w-full text-sm text-left bg-gray-900 text-white">
+          <thead className="bg-gray-800 text-white">
+            <tr>
+              <th className="px-4 py-3">Name</th>
+              <th className="px-4 py-3">Email</th>
+              <th className="px-4 py-3">Age</th>
+              <th className="px-4 py-3">Gender</th>
+              <th className="px-4 py-3">Plan</th>
+              <th className="px-4 py-3">Expiration</th>
+              <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {customerList.length > 0 ? (
+              customerList.map((customer) => (
+                <tr
+                  key={customer._id}
+                  className="border-b border-gray-700 hover:bg-gray-800 transition-colors"
+                >
+                  <td className="px-4 py-2 flex items-center gap-2">
                     <Image
                       src="/images/noavtar.png"
-                      alt=""
+                      alt="User Avatar"
                       width={40}
                       height={40}
-                      className={styles.userImage}
+                      className="rounded-full"
                     />
                     {customer.fullName}
-                  </div>
-                </td>
-                <td>{customer.email}</td>
-                <td>{customer.age}</td>
-                <td>{customer.gender}</td>
-                <td>{customer.plan}</td>
-                <td>{customer.expiration}</td>
-                <td>
-                  <button
-                    className={`${styles.button} ${
-                      customer.isActive ? styles.active : styles.inactive
-                    }`}
-                    onClick={() => toggleStatus()}
-                  >
-                    {customer.isActive ? "Active" : "Inactive"}
-                  </button>
-                </td>
-                <td>
-                  <div className={styles.buttons}>
-                    <Link
-                      href={`/dashboard-admin/users/update/${customer._id}`}
+                  </td>
+                  <td className="px-4 py-2">{customer.email}</td>
+                  <td className="px-4 py-2">{customer.age}</td>
+                  <td className="px-4 py-2">{customer.gender}</td>
+                  <td className="px-4 py-2">{customer.plan}</td>
+                  <td className="px-4 py-2">{customer.expiration}</td>
+                  <td className="px-4 py-2">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        customer.isActive ? "bg-green-600" : "bg-red-600"
+                      }`}
                     >
-                      <button className={`${styles.button} ${styles.View}`}>
-                        View
+                      {customer.isActive ? "Active" : "Inactive"}
+                    </span>
+                  </td>
+                  <td className="px-4 py-2">
+                    <div className="flex gap-2">
+                      <Link href={`/dashboard-admin/users/update/${customer._id}`}>
+                        <button className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs">
+                          View
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => deleteUser(customer._id)}
+                        className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs"
+                      >
+                        Delete
                       </button>
-                    </Link>
-                    <button
-                      className={`${styles.button} ${styles.Delete}`}
-                      onClick={() => deleteUser(customer._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center py-4 text-gray-400">
+                  No Users found
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6"> No Users found</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <Pagination />
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-6">
+        <Pagination />
+      </div>
     </div>
   );
 };
