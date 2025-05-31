@@ -1,0 +1,137 @@
+.container {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    margin-top: 20px;
+  }
+  
+  .infoContainer {
+    width: 100%;
+    max-width: 600px; /* Set a max-width for responsiveness */
+    background-color: var(--bgSoft); /* Soft background color */
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--textSoft); /* Soft text color */
+  }
+  
+  .imgContainer {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .formContainer {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form label {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .form input,
+  .form select {
+    width: 100%;
+    padding: 15px; /* Consistent padding */
+    border: 2px solid #2e374a; /* Solid border for inputs */
+    border-radius: 5px;
+    background-color: var(--bg); /* Background color */
+    color: var(--text); /* Text color */
+    margin-top: 5px;
+    font-size: 14px; /* Adjusted font size for readability */
+  }
+  
+  .form input::placeholder {
+    color: var(--textSoft); /* Soft color for placeholder text */
+  }
+  
+  .form select {
+    height: 50px; /* Adjusted for consistency with inputs */
+    cursor: pointer;
+  }
+  
+  .uploadInput {
+    display: none; /* Hide the default file input */
+  }
+  
+  .customFileUpload {
+    display: inline-block;
+    width: 100%;
+    padding: 15px; /* Adjust padding for consistency */
+    background-color: teal; /* Button color */
+    color: var(--text);
+    border: 2px solid #2e374a; /* Border styling */
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center; /* Center the text */
+    margin-top: 10px; /* Space between input and button */
+    font-size: 14px; /* Adjusted font size */
+  }
+  
+  .updateButton {
+    width: 100%;
+    padding: 15px;
+    background-color: teal; /* Button background color */
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: bold;
+    text-transform: uppercase; /* Make button text uppercase */
+    transition: background-color 0.3s ease;
+  }
+  
+  .updateButton:hover {
+    background-color: #006d6d; /* Slightly darker on hover */
+  }
+  
+  .requiredStar {
+    color: red; /* Red color for the star */
+    margin-left: 5px; /* Spacing between the label and the star */
+  }
+  
+  .passwordContainer {
+    position: relative;
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 35%; /* Center vertically */
+    cursor: pointer;
+    font-size: 20px; /* Adjust size as needed */
+    color: var(--textSoft); /* Eye icon color */
+  }
+  
+  .eyeButton:hover {
+    opacity: 0.7; /* Slight transparency on hover */
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .infoContainer {
+      padding: 15px; /* Reduce padding for smaller screens */
+    }
+  
+    .form input,
+    .form select,
+    .customFileUpload,
+    .updateButton {
+      padding: 12px; /* Adjust padding for smaller screens */
+    }
+  
+    .imgContainer {
+      height: 300px; /* Reduce image height for smaller screens */
+    }
+  }
+  

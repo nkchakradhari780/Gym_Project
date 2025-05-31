@@ -1,0 +1,42 @@
+.container {
+    padding: 40px;
+    text-align: center;
+    background-color: var(--bgSoft);
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #007bff; /* Change to your preferred color */
+  }
+  
+
+  
+  .tableContainer {
+    max-width: 600px; /* Set max width for the table */
+    margin: 0 auto; /* Center the table */
+  }
+  
+  .attendanceTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .attendanceTable th,
+  .attendanceTable td {
+    padding: 12px; /* Reduce padding for table cells */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .viewButton {
+    padding: 8px 12px; /* Smaller padding */
+    font-size: 0.85rem; /* Decrease font size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+  }
+  

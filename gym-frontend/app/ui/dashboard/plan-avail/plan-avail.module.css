@@ -1,0 +1,99 @@
+.plansContainer {
+    text-align: center;
+    padding: 40px;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #e0dddd;
+    margin-bottom: 40px;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: left;
+}
+
+.planTitle {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.price {
+    font-size: 1.8rem;
+    color: #f0379c;
+    margin-bottom: 20px;
+}
+
+.level{
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 8px;  
+} 
+.category,  .dateCreated {
+    font-size: 1rem;
+    color: rgb(94, 94, 116);
+    margin-bottom: 8px;
+}
+.duration{
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 8px; 
+}
+
+.level, .category, .duration {
+    font-weight: bold;
+}
+
+.facilities {
+    font-size: 0.95rem;
+    color: #fcfafa;
+    padding-left: 0;
+}
+
+.facilities li {
+    list-style: none;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+/* Enabled features */
+.enabled {
+    color: #f6f7f5;
+}
+
+.enabled::before {
+    content: '✔'; /* Green tick */
+    color: #8df72a;
+    margin-right: 10px;
+}
+
+/* Disabled features with red cross and line-through */
+.disabled {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.disabled::before {
+    content: '✘'; /* Red cross */
+    color: red;
+    margin-right: 10px;
+}

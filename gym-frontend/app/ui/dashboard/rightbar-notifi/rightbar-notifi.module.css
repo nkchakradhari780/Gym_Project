@@ -1,0 +1,46 @@
+.container {
+    position: relative;
+}
+
+.bgContainer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+}
+
+.item {
+    position: relative;
+    background: linear-gradient(to top, #182237, #253352);
+    padding: 15px; /* Slightly adjusted padding */
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 280px;  /* Increased width */
+    height: 180px; /* Increased height */
+}
+
+.bg {
+    object-fit: cover; /* Fill the container while preserving aspect ratio */
+    width: 100%; /* Ensure the image takes full width */
+    height: 100%; /* Ensure the image takes full height */
+    opacity: 0.2; /* Adjust for visibility */
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Adjusted gap */
+}
+
+.title {
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--textSoft);
+}
+
+.notification {
+    font-weight: bold;
+    font-size: 30px;
+    color: rgb(226, 226, 146);
+}

@@ -1,0 +1,106 @@
+.container {
+  padding: 40px;
+  margin-top: 20px;
+  text-align: center;
+  background-color: var(--bgSoft); /* Optional: Improve visibility */
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.dateContainer {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: black;
+}
+
+.dateContainer1{
+  background-color: beige;
+  width: 12vw;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+.dateInput {
+  padding: 8px;
+  font-size: 0.9rem;
+  background-color: transparent;
+}
+
+.attendanceTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.attendanceTable th,
+.attendanceTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.presentButton,
+.absentButton,
+.viewButton {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.presentButton {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+}
+
+.absentButton {
+  background-color: #dc3545;
+  color: white;
+  font-weight: bold;
+}
+
+.viewButton {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Submit Button Styles */
+.submitButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff; /* Primary color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-top: 20px; /* Ensure space above the button */
+  margin-bottom: 20px;
+}
+
+.submitButton:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.disabledButton1 {
+  background-color: #28a745;
+  color: black;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.disabledButton2 {
+  background-color: #585656; /* Style for Absent status */
+  color: rgb(0, 0, 0);
+  cursor: not-allowed;
+  opacity: 1;
+}

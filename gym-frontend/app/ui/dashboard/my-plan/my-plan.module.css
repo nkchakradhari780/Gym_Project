@@ -1,0 +1,73 @@
+/* Wrapper */
+.wrapper {
+  padding: 20px;
+  background-color: var(--bgPrimary);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Plan Sections */
+.currentPlan, .purchasedPlans, .expiredPlans {
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: var(--bgSecondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Plan Cards */
+.card {
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: var(--bgSoft);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Add margin above each card */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Additional space for the first card (Current Plan) */
+.card:first-child {
+  margin-top: 40px; /* Extra space above the first card */
+}
+
+/* Plan Details */
+.planDetails {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.planDetails:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Headings */
+.h2, .planTitle {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  color: var(--textPrimary);
+  font-weight: 600;
+  margin-top: 10px; /* Space above each section title */
+}
+
+.planTitle {
+  font-size: 1.4rem;
+  color: var(--accentColor);
+  margin-bottom: 12px;
+}
+
+/* Text */
+.planDetails p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: var(--textSecondary);
+}
+
+.planDetails p strong {
+  color: var(--textPrimary);
+  font-weight: 500;
+}

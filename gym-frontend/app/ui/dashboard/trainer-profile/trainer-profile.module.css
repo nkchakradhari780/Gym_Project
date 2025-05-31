@@ -1,0 +1,49 @@
+/* manager-profile.module.css */
+
+.container {
+    max-width: 800px; /* Maximum width for the container */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Padding inside the container */
+  }
+  
+  .h1 {
+    font-size: 2rem; /* Font size for the main heading */
+    font-weight: bold; /* Bold font for the main heading */
+    margin-bottom: 20px; /* Space below the heading */
+    text-align: center; /* Center the heading */
+  }
+  
+  .profile_card {
+    background-color: #1f2937; /* Dark gray background */
+    color: white; /* White text color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    padding: 30px; /* Padding inside the card */
+    text-align: center; /* Center the text in the card */
+  }
+  
+  .profile_image {
+    border-radius: 50%; /* Make the image circular */
+    margin-bottom: 20px; /* Space below the image */
+  }
+  
+  
+  .field {
+    display: flex; /* Use flexbox for field layout */
+    justify-content: space-between; /* Space between label and value */
+    margin-bottom: 15px; /* Space below each field */
+  }
+  
+  .field h2 {
+    font-size: 1.25rem; /* Font size for field labels */
+    font-weight: 600; /* Semi-bold font for labels */
+    margin: 0; /* Remove default margin */
+    flex: 1; /* Allow label to take available space */
+  }
+  
+  .field p {
+    margin: 0; /* Remove default margin for paragraphs */
+    flex: 2; /* Allow value to take more space */
+    text-align: right; /* Align text to the right */
+  }
+  

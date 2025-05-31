@@ -1,0 +1,39 @@
+.container {
+    background-color: var(--bgSoft);
+    padding: 15px; /* Increased padding */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Slightly larger gap */
+    cursor: pointer;
+    width: 250px; /* Increased width */
+    height: 100px; /* Increased height */
+}
+
+.container:hover {
+    background-color: #2e374a;
+}
+
+.texts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Increased gap between text elements */
+}
+
+.number {
+    font-size: 22px; /* Medium font size */
+    font-weight: 500;
+}
+
+.detail {
+    font-size: 13px; /* Slightly larger font size */
+    font-weight: 300;
+}
+
+.positive {
+    color: lime;
+}
+
+.negative {
+    color: red;
+}

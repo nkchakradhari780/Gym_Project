@@ -1,0 +1,57 @@
+// src/api/auth/login.js
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const customerModel = require("../models/costumer_model");
+const managerModel = require("../models/manager_model");
+const ownerModel = require('../models/owner_model');
+const trainerModel = require("../models/trainer_model");
+const { generateToken } = require("../utils/generatetoken");
+
+
+module.exports.loginHandler = async (req, res) =>{
+  if (req.method === 'POST') {
+    const { email, password, role } = req.body;
+
+
+    switch (role) {
+      case 'customer':
+        user = await customerModel.findOne({ email });
+        break;
+      case 'manager':
+        user = await managerModel.findOne({ email });
+        break;
+      case 'trainer':
+        user = await trainerModel.findOne({ email });
+        break;
+      case 'admin':
+        user = await ownerModel.findOne({ email });
+        break;
+      default:
+        return res.status(400).json({ success: false, message: 'Invalid role' });
+    }
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Email or password is incorrect' });
+    }
+
+    bcrypt.compare(password, user.password, (err,result)=>{
+        if(err)
+          return res.status(500).send("Error occured while comparing passwords")
+        if(result){
+          let token = jwt.sign({ownerId: user._id},process.env.JWT_KEY);
+          res.cookie("token", token,{
+            httpOnly: true,
+            secrure: false,
+            maxAge: 3600000
+          });
+          res.status(200).json({success: true, message: "LoggedIN Successfully",user,token})
+        }
+        else{
+          res.send("Email or password is incorrect");
+          return res.redirect('/')
+        }
+      })
+  } else {
+    res.status(405).json({ success: false, message: 'Method not allowed' });
+  }
+}

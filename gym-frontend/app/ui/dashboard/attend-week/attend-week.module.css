@@ -1,0 +1,59 @@
+.container {
+    padding: 40px;
+    text-align: center;
+    background-color: var(--bgSoft);
+}
+
+.title {
+    font-size: 2rem;
+    color: teal; /* Adjust color as needed */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.tableContainer {
+    max-width: 600px; /* Limits table width */
+    margin: 0 auto; /* Centers the table */
+    overflow-x: auto; /* Add horizontal scroll for smaller screens */
+}
+
+.attendanceTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Fixes column widths to avoid overflow */
+    margin: 20px 0;
+}
+
+.attendanceTable th,
+.attendanceTable td {
+    padding: 12px; /* Reduced padding */
+    text-align: center; /* Center align table content */
+    border-bottom: 1px solid #ddd; /* Table cell bottom border */
+    word-wrap: break-word; /* Ensure long text breaks within the cell */
+}
+
+.attendanceTable th {
+    color: rgb(223, 235, 58);
+    background-color: rgb(15, 61, 61);
+}
+
+.attendanceTable td {
+    background-color: var(--bgSoft);
+}
+
+.buttonContainer {
+    margin-top: 20px; /* Space above the button */
+}
+
+.viewButton {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: teal; /* Button background color */
+    color: white; /* Button text color */
+}
+
+.viewButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

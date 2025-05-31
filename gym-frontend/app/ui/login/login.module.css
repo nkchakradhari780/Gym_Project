@@ -1,0 +1,121 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; /* Add padding to avoid touching screen edges */
+}
+
+.form {
+  background-color: var(--bgSoft);
+  padding: 50px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px; /* Max width to prevent it from being too wide */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Adjust form inputs and selects */
+.form input, 
+.form select {
+  width: 100%;
+  padding: 15px;
+  background-color: #2e374a;
+  border: 2px solid #2e374a;
+  border-radius: 5px;
+  color: var(--text);
+}
+
+/* Password container with eye icon */
+.passwordContainer {
+  position: relative;
+  width: 100%;
+}
+
+.passwordContainer input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--textSoft);
+}
+
+/* Button styling */
+.buttonWrapper {
+  width: 100%;
+}
+
+.form button {
+  width: 100%;
+  padding: 15px;
+  background-color: teal;
+  color: var(--text);
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.form button:hover {
+  background-color: #004d4d;
+}
+
+.form button:active {
+  background-color: #003333;
+}
+
+/* Select dropdown */
+.select {
+  width: 100%;
+  padding: 15px;
+  background-color: #2e374a;
+  border: 2px solid #2e374a;
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+  appearance: none;
+}
+
+.select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.5);
+}
+
+/* RESPONSIVE MEDIA QUERIES */
+@media (max-width: 768px) {
+  .form {
+    padding: 30px; /* Reduce padding for smaller screens */
+    max-width: 400px; /* Adjust max-width */
+  }
+
+  .form button, 
+  .form input, 
+  .form select {
+    padding: 12px; /* Reduce padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 20px; /* Further reduce padding for mobile devices */
+    max-width: 100%; /* Full width on small screens */
+  }
+
+  .form button, 
+  .form input, 
+  .form select {
+    padding: 10px; /* Even smaller padding for mobile devices */
+  }
+}

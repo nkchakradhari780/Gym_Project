@@ -1,0 +1,145 @@
+/* General container styling */
+.container {
+    position: sticky;
+    top: 40px;
+    padding: 15px; /* Reduced padding */
+}
+
+/* User info container */
+.user {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Reduced gap */
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+/* User profile image */
+.userImage {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 40px; /* Decreased size */
+    height: 40px;
+}
+
+/* User details */
+.userDetail {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: 500;
+    font-size: 14px; /* Decreased font size */
+}
+
+.userTitle {
+    font-size: 10px; /* Decreased font size */
+    color: var(--textSoft);
+}
+
+/* List styles */
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list li {
+    margin-bottom: 15px; /* Adds gap between list items */
+}
+
+/* Category styling */
+.cat {
+    color: var(--textSoft);
+    font-weight: bold;
+    font-size: 12px; /* Slightly smaller font size */
+    margin: 10px 0;
+}
+
+/* Logout button */
+button.logoutbtn {
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px; /* Reduced padding */
+    font-size: 13px; /* Reduced font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.logoutbtn:hover {
+    background-color: #bd2937;
+    transform: scale(1.05);
+}
+
+button.logoutbtn:active {
+    transform: scale(0.95);
+}
+
+button.logoutbtn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 75, 92, 0.5);
+}
+
+/* Media Queries for responsiveness */
+
+/* For tablets and smaller screens */
+@media (max-width: 768px) {
+    .user {
+        gap: 10px;
+    }
+
+    .userImage {
+        width: 35px; /* Reduced for smaller screens */
+        height: 35px;
+    }
+
+    .username {
+        font-size: 12px; /* Reduced for smaller screens */
+    }
+
+    .cat {
+        font-size: 11px;
+    }
+
+    .list li {
+        margin-bottom: 10px; /* Reduced gap between list items for tablets */
+    }
+
+    button.logoutbtn {
+        font-size: 12px;
+        padding: 5px 10px; /* Adjusted for smaller screens */
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .user {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .userImage {
+        width: 30px; /* Even smaller for mobile */
+        height: 30px;
+    }
+
+    .username {
+        font-size: 11px; /* Reduced for mobile */
+    }
+
+    .list li {
+        margin-bottom: 8px; /* Reduced gap for mobile devices */
+    }
+
+    button.logoutbtn {
+        font-size: 11px;
+        padding: 4px 8px; /* Adjusted for mobile */
+        width: 100%;
+    }
+}

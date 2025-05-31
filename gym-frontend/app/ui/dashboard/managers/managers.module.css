@@ -1,0 +1,95 @@
+.container {
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto; /* Center the container */
+    max-width: 1200px; /* Set a max width for larger screens */
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Space between header and table */
+}
+
+.addButton {
+    padding: 10px 15px; /* More padding for better button size */
+    background-color: #5d57c9;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.addButton:hover {
+    background-color: #4a49a3; /* Darker shade on hover */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Remove gaps between table cells */
+}
+
+.table th,
+.table td {
+    padding: 15px; /* Increased padding for better spacing */
+    text-align: left; /* Left align text for readability */
+    border-bottom: 1px solid #ddd; /* Add border for separation */
+}
+
+.manager {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Consistent spacing */
+}
+
+.managerImage {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 6px 12px; /* Adjusted padding */
+    border-radius: 5px;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.View {
+    background-color: teal;
+}
+
+.View:hover {
+    background-color: darkcyan; /* Darker shade on hover */
+}
+
+.Delete {
+    background-color: crimson;
+}
+
+.Delete:hover {
+    background-color: darkred; /* Darker shade on hover */
+}
+
+.active {
+    background-color: green; /* Green for active */
+    color: white;
+}
+
+.inactive {
+    background-color: orange; /* Orange for inactive */
+    color: white;
+}
+
+.button {
+    outline: none; /* Remove focus outline */
+}

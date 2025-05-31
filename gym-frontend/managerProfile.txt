@@ -1,0 +1,77 @@
+import Image from 'next/image';
+import styles from '@/app/ui/dashboard/manager-profile/manager-profile.module.css';
+
+const ManagerProfile = () => {
+  const managerDetails = {
+    username: 'nisha_saw',
+    email: 'nisha@example.com',
+    password: '********',
+    contact: '1234567890',
+    address: '123 Main St, Bhilai, India',
+    dob: '20/08/2000',
+    gender: 'Female',
+    salary: '₹ 50000',
+    joinDate: '01-01-2023',
+    resignDate: 'N/A',
+    managerID: 'MGR123',
+    imageUrl: '/images/noavtar.png',
+  };
+
+  return (
+    <div className={styles.container}>
+      <h1>Your Profile:</h1>
+      <div className={styles.profile_card}>
+        <Image 
+          src={managerDetails.imageUrl} 
+          alt=''
+          className={styles.profile_image} 
+          width={150} // Set the width you need
+          height={150} // Set the height you need
+          objectFit="cover" // To maintain aspect ratio
+        />
+        <div className={styles.field}>
+          <h2>Username:</h2>
+          <p>{managerDetails.username}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Email:</h2>
+          <p>{managerDetails.email}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Contact:</h2>
+          <p>{managerDetails.contact}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Address:</h2>
+          <p>{managerDetails.address}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Date of Birth:</h2>
+          <p>{managerDetails.dob}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Gender:</h2>
+          <p>{managerDetails.gender}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Salary:</h2>
+          <p>{managerDetails.salary}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Join Date:</h2>
+          <p>{managerDetails.joinDate}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Resign Date:</h2>
+          <p>{managerDetails.resignDate}</p>
+        </div>
+        <div className={styles.field}>
+          <h2>Manager ID:</h2>
+          <p>{managerDetails.managerID}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ManagerProfile;

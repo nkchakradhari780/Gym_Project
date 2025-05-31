@@ -1,0 +1,115 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--bgSoft); /* Dark theme */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px  #2e374a;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.heading {
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.backButton {
+    background-color: teal;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+    background-color: rgb(0, 85, 85);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.inputField,
+.selectField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #252944;
+    border-radius: 5px;
+    background-color: #1b1b20;
+    color: #ffffff;
+    font-size: 13px;
+
+    transition: border-color 0.3s ease;
+}
+
+.inputField:focus,
+.selectField:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.requiredStar {
+    color: #e74c3c;
+}
+
+.facilitiesContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkboxGroup {
+    margin: 5px 0;
+}
+
+.checkbox {
+    margin-right: 10px;
+}
+
+.checkboxLabel {
+    color: #ffffff;
+}
+
+.submitButton {
+    background-color: teal;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: rgb(0, 80, 80);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
+}

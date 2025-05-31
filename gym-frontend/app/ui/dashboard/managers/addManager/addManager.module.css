@@ -1,0 +1,107 @@
+.container {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    margin-top: 20px;
+  }
+  
+  .infoContainer {
+    width: 100%;
+    max-width: 600px; /* Set a max-width for responsiveness */
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--textSoft);
+  }
+  
+  .imgContainer {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .formContainer {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form label {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .form input,
+  .form select {
+    width: 100%;
+    padding: 15px; /* Consistent padding */
+    border: 2px solid #2e374a;
+    border-radius: 5px;
+    background-color: var(--bg);
+    color: var(--text);
+    margin-top: 5px;
+  }
+  
+  .form select {
+    height: 50px; /* Adjusted for consistency with inputs */
+  }
+  
+  .uploadInput {
+    display: none; /* Hide the default file input */
+  }
+  
+  .customFileUpload {
+    display: inline-block;
+    width: 100%;
+    padding: 15px; /* Adjust padding for consistency */
+    background-color: teal;
+    color: var(--text);
+    border: 2px solid #2e374a;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center; /* Center the text */
+    margin-top: 10px; /* Space between input and button */
+  }
+  
+  .updateButton {
+    width: 100%;
+    padding: 15px;
+    background-color: teal;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+.requiredStar {
+    color: red; /* Red color for the star */
+    margin-left: 5px; /* Spacing between the label and the star */
+}
+
+  
+
+.passwordContainer {
+    position: relative;
+}
+
+.eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 35%; /* Center vertically */
+    cursor: pointer;
+    font-size: 20px; /* Adjust size as needed */
+}
+
+  .eyeButton:hover {
+    opacity: 0.7; /* Slight transparency on hover */
+  }
+  

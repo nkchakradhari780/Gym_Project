@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px; /* Corrected gap: Adds space between icon and text */
+    margin: 5px 0;
+    border-radius: 10px;
+    font-size: 1rem; /* Base font size */
+    transition: background-color 0.3s, padding 0.3s, gap 0.3s; /* Smooth transitions */
+}
+
+.container:hover,
+.container.active {
+    background-color: #2e374a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        font-size: 0.9rem;
+        gap: 8px; /* Reduced gap on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        font-size: 0.8rem;
+        gap: 5px; /* Minimize gap on very small screens */
+    }
+}
