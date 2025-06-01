@@ -68,26 +68,32 @@ const SidebarAdmin = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAdminDetails = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/owner", {
-          withCredentials: true,
-        });
-        if (response.data) {
-          setAdminDetails(response.data.owner);
-        } else {
-          setError("No data returned from API");
-        }
-      } catch (error) {
+  const fetchAdminDetails = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/owner", {
+        withCredentials: true,
+      });
+      if (response.data) {
+        setAdminDetails(response.data.owner);
+      } else {
+        setError("No data returned from API");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to '/' on unauthorized
+        window.location.href = "/";
+      } else {
         console.error("Error fetching Admin Details:", error.message);
         setError(error.message);
-      } finally {
-        setLoading(false);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchAdminDetails();
-  }, []);
+  fetchAdminDetails();
+}, []);
+
 
   const handleLogout = async () => {
     try {
