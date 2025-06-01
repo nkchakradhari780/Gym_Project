@@ -1,74 +1,5 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const userModel = require("../models/user_model");
-const { generateToken } = require("../utils/generatetoken");
-
-module.exports.loginManager = async (req, res) => {
-  try {
-    let { email, password } = req.body;
-
-    let manager = await userModel.findOne({ email });
-    // Changed 'trainer' to 'manager' for the correct variable
-    if (!manager) return res.status(401).send("Email or password is incorrect");
-
-    bcrypt.compare(password, manager.password, (err, result) => {
-      if (err)
-        return res.status(500).send("Error occurred while comparing passwords");
-      if (result) {
-        let token = jwt.sign({managerId: manager._id},process.env.JWT_KEY); // Changed 'trainer' to 'manager'
-        res.cookie("token", token,{
-            httpOnly: true,
-            secrure: false,
-            maxAge: 3600000
-        });
-        res.status(200).json({success: true, message: "Manager LoggedIN Successfully",manager,token})
-      } else {
-        return res.status(401).send("Email or password is incorrect");
-      }
-    });
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server error");
-  }
-};
-
-module.exports.updateManager = async (req, res) => {
-  try {
-    let { salary, address, contact, email, status } = req.body;
-
-    let manager = await userModel.findOneAndUpdate(
-      { email },
-      { salary, address, contact},
-      { new: true }
-    );
-    if (!manager) return res.status(401).send("Something went wrong");
-    res.send(manager);
-  } 
-    catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server error");
-  }
-};
-
-module.exports.deleteManager = async (req, res) => {
-  try {
-    const { id } = req.params; // Get manager ID from the URL params
-
-    // Find and delete the manager by ID
-    let manager = await userModel.findByIdAndDelete(id);
-
-    // If no manager is found, return a 404 response
-    if (!manager) {
-      return res.status(404).send("Manager not found");
-    }
-
-    // Successfully deleted the manager
-    res.status(200).send("Manager deleted successfully");
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server error");
-  }
-};
 
 
 module.exports.registerManager = async (req, res) => {
@@ -122,6 +53,49 @@ module.exports.registerManager = async (req, res) => {
   }
 };
 
+
+
+module.exports.updateManager = async (req, res) => {
+  try {
+    let { salary, address, contact, email, status } = req.body;
+
+    let manager = await userModel.findOneAndUpdate(
+      { email },
+      { salary, address, contact},
+      { new: true }
+    );
+    if (!manager) return res.status(401).send("Something went wrong");
+    res.send(manager);
+  } 
+    catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+
+
+module.exports.deleteManager = async (req, res) => {
+  try {
+    const { id } = req.params; // Get manager ID from the URL params
+
+    // Find and delete the manager by ID
+    let manager = await userModel.findByIdAndDelete(id);
+
+    // If no manager is found, return a 404 response
+    if (!manager) {
+      return res.status(404).send("Manager not found");
+    }
+
+    // Successfully deleted the manager
+    res.status(200).send("Manager deleted successfully");
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+
 module.exports.listManagers = async (req, res) => {
   try {
     let managerList = await userModel.find({role: 'manager'});
@@ -138,11 +112,13 @@ module.exports.listManagers = async (req, res) => {
   }
 };
 
+
+
 module.exports.managerDetails = async (req,res) => {
   try {
     const email = req.email;
 
-    let manager = await userModel.findOne({email})
+    let manager = await userModel.findOne({email, role: 'manager'})
     if(!manager){
       return res
         .status(404)

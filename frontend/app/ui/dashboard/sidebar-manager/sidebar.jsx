@@ -94,7 +94,7 @@ const SidebarManager = () => {
       } catch (error) {
         if (error.response && error.response.status === 401) {
           // Redirect to '/' on unauthorized
-          window.location.href = "/";
+        //   window.location.href = "/";
         } else {
           console.error("Error fetching Manager Details:", error.message);
           setError(error.message);
