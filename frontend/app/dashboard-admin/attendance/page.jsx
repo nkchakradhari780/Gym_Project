@@ -1,63 +1,45 @@
-"use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import axios from "axios";
-import styles from "@/app/ui/dashboard/attendance/attendance.module.css";
+'use client';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
 
 const AttendanceAdPage = () => {
   const [trainerAttendance, setTrainerAttendance] = useState([]);
   const [customerAttendance, setCustomerAttendance] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set the current date initially
   useEffect(() => {
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split('T')[0];
     setSelectedDate(today);
   }, []);
 
-  // Fetch data when selectedDate changes
   useEffect(() => {
     const fetchCustomerList = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/owner/customer/attendance/list",
+          'http://localhost:3001/owner/customer/attendance/list',
           { withCredentials: true }
         );
-
-        if (response.data && response.data.attendanceData) {
-          console.log(
-            "Customer Attendence List:",
-            response.data.attendanceData
-          );
+        if (response.data?.attendanceData) {
           setCustomerAttendance(
-            response.data.attendanceData.map((attendanceData) => {
-              const attendanceArray = attendanceData.attendance || [];
-              const attendanceRecord = attendanceArray.find((entry) => {
-                const entryDate = new Date(entry.date)
-                  .toISOString()
-                  .split("T")[0];
-                return entryDate === selectedDate;
-              });
-
+            response.data.attendanceData.map((d) => {
+              const rec = d.attendance?.find((a) => new Date(a.date).toISOString().split('T')[0] === selectedDate);
               return {
-                id: attendanceData.customerId,
-                name: attendanceData.name,
-                email: attendanceData.email,
-                attendance: attendanceArray,
-                role: attendanceData.role,
-                status: attendanceRecord ? attendanceRecord.status : "",
+                id: d.customerId,
+                name: d.name,
+                email: d.email,
+                attendance: d.attendance || [],
+                role: d.role,
+                status: rec?.status || '',
                 date: selectedDate,
-                submitted: false, // Add the `submitted` field
+                submitted: false,
               };
             })
           );
-        } else {
-          setError("No customer data returned from API");
-        }
+        } else setError('No customer data returned');
       } catch (error) {
-        console.error("Error fetching customer list:", error.message);
         setError(error.message);
       }
     };
@@ -65,263 +47,167 @@ const AttendanceAdPage = () => {
     const fetchTrainersList = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/owner/trainer/attendance/list",
+          'http://localhost:3001/owner/trainer/attendance/list',
           { withCredentials: true }
         );
-
-        if (response.data && response.data.attendanceData) {
-          console.log(
-            "Trainers Attendance List:",
-            response.data.attendanceData
-          );
+        if (response.data?.attendanceData) {
           setTrainerAttendance(
-            response.data.attendanceData.map((attendanceData) => {
-              const attendanceArray = attendanceData.attendance || [];
-              const attendanceRecord = attendanceArray.find((entry) => {
-                const entryDate = new Date(entry.date)
-                  .toISOString()
-                  .split("T")[0];
-                return entryDate === selectedDate;
-              });
-
+            response.data.attendanceData.map((d) => {
+              const rec = d.attendance?.find((a) => new Date(a.date).toISOString().split('T')[0] === selectedDate);
               return {
-                id: attendanceData.trainerId,
-                name: attendanceData.name,
-                email: attendanceData.email,
-                attendance: attendanceArray,
-                role: attendanceData.role,
-                status: attendanceRecord ? attendanceRecord.status : "",
+                id: d.trainerId,
+                name: d.name,
+                email: d.email,
+                attendance: d.attendance || [],
+                role: d.role,
+                status: rec?.status || '',
                 date: selectedDate,
-                submitted: false, // Add the `submitted` field
+                submitted: false,
               };
             })
           );
-        } else {
-          setError("No trainer data returned from API");
-        }
+        } else setError('No trainer data returned');
       } catch (error) {
-        console.error("Error fetching trainer list:", error.message);
         setError(error.message);
       }
     };
 
     if (selectedDate) {
       setLoading(true);
-      Promise.all([fetchCustomerList(), fetchTrainersList()]).finally(() =>
-        setLoading(false)
-      );
+      Promise.all([fetchCustomerList(), fetchTrainersList()]).finally(() => setLoading(false));
     }
   }, [selectedDate]);
 
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
-
   const markAttendance = (id, status, type) => {
-    const updateAttendance = (data) =>
-      data.map((entry) =>
-        entry.id === id ? { ...entry, status: status } : entry
-      );
-
-    if (type === "trainer") {
-      setTrainerAttendance((prevData) => updateAttendance(prevData));
-    } else {
-      setCustomerAttendance((prevData) => updateAttendance(prevData));
-    }
+    const update = (list) => list.map((entry) => (entry.id === id ? { ...entry, status } : entry));
+    type === 'trainer'
+      ? setTrainerAttendance((prev) => update(prev))
+      : setCustomerAttendance((prev) => update(prev));
   };
 
-  const handleTrainerSubmit = async () => {
+  const submitAttendance = async (list, url, setList, label) => {
     try {
-      for (const trainer of trainerAttendance) {
-        const dataToSubmit = {
-          email: trainer.email,
-          date: selectedDate,
-          status: trainer.status || "Absent",
-        };
-
-        console.log("Trainer Data to submit", dataToSubmit)
-
-        const response = await axios.post(
-          "http://localhost:3001/owner/trainer/attendence/mark",
-          dataToSubmit,
+      for (const item of list) {
+        await axios.post(
+          url,
+          { email: item.email, date: selectedDate, status: item.status || 'Absent' },
           { withCredentials: true }
         );
-
-        if (response.status !== 200) {
-          throw new Error(
-            "Failed to submit trainer attendance. Please try again."
-          );
-        }
       }
-
-      setTrainerAttendance((prevAttendance) =>
-        prevAttendance.map((entry) => ({ ...entry, submitted: true }))
-      );
-
-      alert("Trainer attendance successfully submitted!");
-    } catch (error) {
-      console.error("Error submitting trainer attendance:", error.message);
-      alert(
-        "An error occurred while submitting trainer attendance. Please try again."
-      );
-    }
-  };
-
-  const handleCustomerSubmit = async () => {
-    try {
-      for (const customer of customerAttendance) {
-        const dataToSubmit = {
-          email: customer.email,
-          date: selectedDate,
-          status: customer.status || "Absent",
-        };
-
-        console.log("Cutomer Data to submit:",dataToSubmit)
-
-        const response = await axios.post(
-          "http://localhost:3001/owner/customer/attendance/mark",
-          dataToSubmit,
-          { withCredentials: true }
-        );
-
-        if (response.status !== 200) {
-          throw new Error(
-            "Failed to submit customer attendance. Please try again."
-          );
-        }
-      }
-
-      setCustomerAttendance((prevAttendance) =>
-        prevAttendance.map((entry) => ({ ...entry, submitted: true }))
-      );
-
-      alert("Customer attendance successfully submitted!");
-    } catch (error) {
-      console.error("Error submitting customer attendance:", error.message);
-      const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred while submitting attendance.";
-      alert(errorMessage);
+      setList((prev) => prev.map((entry) => ({ ...entry, submitted: true })));
+      alert(`${label} attendance successfully submitted!`);
+    } catch (err) {
+      alert(`Error submitting ${label.toLowerCase()} attendance.`);
     }
   };
 
   const renderTable = (data, type) => (
-    <table className={styles.attendanceTable}>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Present</th>
-          <th>Absent</th>
-          <th>View</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((person) => (
-          <tr key={person.id}>
-            <td>{person.name}</td>
-            <td>{person.email}</td>
-            <td>
-              <button
-                className={`
-                  ${styles.presentButton} 
-                  ${
-                    person.status === "Present"
-                      ? styles.disabledButton1
-                      : person.status === "Absent"
-                      ? styles.disabledButton2
-                      : ""
-                  }
-                `}
-                onClick={() => markAttendance(person.id, "Present", type)}
-                disabled={person.submitted}
-              >
-                Present
-              </button>
-            </td>
-            <td>
-              <button
-                className={`
-                  ${styles.absentButton} 
-                  ${
-                    person.status === "Absent"
-                      ? styles.disabledButton1
-                      : person.status === "Present"
-                      ? styles.disabledButton2
-                      : ""
-                  }
-                `}
-                onClick={() => markAttendance(person.id, "Absent", type)}
-                disabled={person.submitted}
-              >
-                Absent
-              </button>
-            </td>
-            <td>
-              <Link href={`/dashboard-admin/attendance/singleAttendance/${person.role}/${person.id}`}>
-                <button className={styles.viewButton}>View</button>
-              </Link>
-            </td>
+    <div className="overflow-x-auto mt-6 rounded-lg shadow border border-gray-800">
+      <table className="min-w-full text-sm text-left bg-gray-900 text-white">
+        <thead className="bg-gray-800 text-white">
+          <tr>
+            <th className="px-4 py-3">Name</th>
+            <th className="px-4 py-3">Email</th>
+            <th className="px-4 py-3">Present</th>
+            <th className="px-4 py-3">Absent</th>
+            <th className="px-4 py-3">View</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.length > 0 ? (
+            data.map((person) => (
+              <tr key={person.id} className="border-b border-gray-700 hover:bg-gray-800 transition-colors">
+                <td className="px-4 py-2">{person.name}</td>
+                <td className="px-4 py-2">{person.email}</td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => markAttendance(person.id, 'Present', type)}
+                    disabled={person.submitted}
+                    className={`px-3 py-1 rounded text-xs font-medium ${
+                      person.status === 'Present' ? 'bg-green-600 opacity-70' : 'bg-green-600 hover:bg-green-700'
+                    }`}
+                  >
+                    Present
+                  </button>
+                </td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => markAttendance(person.id, 'Absent', type)}
+                    disabled={person.submitted}
+                    className={`px-3 py-1 rounded text-xs font-medium ${
+                      person.status === 'Absent' ? 'bg-red-600 opacity-70' : 'bg-red-600 hover:bg-red-700'
+                    }`}
+                  >
+                    Absent
+                  </button>
+                </td>
+                <td className="px-4 py-2">
+                  <Link href={`/dashboard-admin/attendance/singleAttendance/${person.id}`}>
+                    <button className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs">
+                      View
+                    </button>
+                  </Link>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="text-center py-4 text-gray-400">
+                No data found
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  if (loading) return <div className="text-white p-4">Loading...</div>;
+  if (error) return <div className="text-red-500 p-4">Error: {error}</div>;
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Attendance</h1>
-
-      <div className={styles.dateContainer}>
-        <div className={styles.dateContainer1}>
-          <label htmlFor="attendanceDate">Date: </label>
-          <input
-            type="date"
-            id="attendanceDate"
-            value={selectedDate}
-            onChange={handleDateChange}
-            className={styles.dateInput}
-          />
-        </div>
+    <div className="p-4 sm:p-6 md:p-8 bg-gray-950 min-h-screen text-white mt-5">
+      <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
+        <h1 className="text-2xl font-semibold">Attendance Management</h1>
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700"
+        />
       </div>
 
-      <h2 className={styles.sectionTitle}>Trainers</h2>
-      {trainerAttendance.length > 0 ? (
-        <>
-          {renderTable(trainerAttendance, "trainer")}
-          <button 
-            className={styles.submitButton} 
-            onClick={handleTrainerSubmit}
-          >
-            Submit Trainer Attendance
-          </button>
-        </>
-      ) : (
-        <p>No trainers available.</p>
-      )}
+      <h2 className="text-xl font-semibold mt-4 mb-2">Trainer Attendance</h2>
+      {renderTable(trainerAttendance, 'trainer')}
+      <button
+        onClick={() =>
+          submitAttendance(
+            trainerAttendance,
+            'http://localhost:3001/owner/trainer/attendence/mark',
+            setTrainerAttendance,
+            'Trainer'
+          )
+        }
+        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 mt-3 rounded shadow"
+      >
+        Submit Trainer Attendance
+      </button>
 
-      <h2 className={styles.sectionTitle}>Customers</h2>
-      {customerAttendance.length > 0 ? (
-        <>
-          {renderTable(customerAttendance, "customer")}
-          <button
-            className={styles.submitButton}
-            onClick={handleCustomerSubmit}
-          >
-            Submit Customer Attendance
-          </button>
-        </>
-      ) : (
-        <p>No customers available.</p>
-      )}
+      <h2 className="text-xl font-semibold mt-10 mb-2">Customer Attendance</h2>
+      {renderTable(customerAttendance, 'customer')}
+      <button
+        onClick={() =>
+          submitAttendance(
+            customerAttendance,
+            'http://localhost:3001/owner/customer/attendance/mark',
+            setCustomerAttendance,
+            'Customer'
+          )
+        }
+        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 mt-3 rounded shadow"
+      >
+        Submit Customer Attendance
+      </button>
     </div>
   );
 };

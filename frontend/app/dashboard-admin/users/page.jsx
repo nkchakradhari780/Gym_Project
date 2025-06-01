@@ -55,7 +55,7 @@ const UsersPage = () => {
   if (error) return <div className="text-red-500 p-4">Error: {error}</div>;
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 bg-gray-950 min-h-screen text-white mt-5">
+    <div className="p-4 sm:p-6 md:p-8 bg-gray-950 min-h-[75vh] text-white mt-5">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
         <h1 className="text-2xl font-semibold">User Management</h1>
         <Link href="/dashboard-admin/users/add-user">

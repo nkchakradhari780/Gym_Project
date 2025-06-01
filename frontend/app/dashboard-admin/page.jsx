@@ -23,9 +23,9 @@ const DashboardAdmin = () => {
           withCredentials: true,
         });
         setCount({
-          totalManagers: response.data.managerCount,
-          totalTrainers: response.data.trainerCount,
-          totalMembers: response.data.customerCount,
+          totalManagers: response.data.counts.manager,
+          totalTrainers: response.data.counts.trainer,
+          totalMembers: response.data.counts.member,
         });
         setError(null);
       } catch (err) {
@@ -37,24 +37,41 @@ const DashboardAdmin = () => {
     fetchCountDetails();
   }, []);
 
-  if (loading) return <p className="text-center text-gray-500">Loading...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (loading)
+    return (
+      <p className="text-center text-gray-400 mt-20 text-lg font-medium">
+        Loading...
+      </p>
+    );
+  if (error)
+    return (
+      <p className="text-center text-red-500 mt-20 text-lg font-medium">
+        {error}
+      </p>
+    );
 
   return (
-    <div className="flex flex-col md:flex-row mt-6 gap-6">
-      {/* Main Content */}
-      <div className="flex-[3] flex flex-col gap-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Card title="Total Managers" number={count.totalManagers} />
-          <Card title="Total Trainers" number={count.totalTrainers} />
-          <Card title="Total Members" number={count.totalMembers} />
+    <div className="w-full flex flex-col xl:flex-row gap-8 px-4 sm:px-6 md:px-8 py-6 overflow-hidden">
+      {/* Left main content */}
+      <div className="flex-1 flex flex-col gap-8 overflow-hidden ">
+        {/* Cards */}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
+            <Card title="Total Managers" number={count.totalManagers} />
+            <Card title="Total Trainers" number={count.totalTrainers} />
+            <Card title="Total Members" number={count.totalMembers} />
+          </div>
         </div>
+
+        {/* Transactions */}
         <Transactions />
-        {/* <Chart /> */}
+
+        {/* Chart */}
+        <Chart />
       </div>
 
       {/* Rightbar */}
-      <div className="flex-1 hidden xl:block">
+      <div className="hidden xl:block flex-shrink-0 w-96 min-w-[24rem]">
         {/* <Rightbar /> */}
       </div>
     </div>
