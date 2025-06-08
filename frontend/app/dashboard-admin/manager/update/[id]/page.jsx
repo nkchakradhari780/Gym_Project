@@ -1,33 +1,30 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import styles from '@/app/ui/dashboard/managers/addManager/addManager.module.css';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { useParams, useRouter } from 'next/navigation';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
 
 const SingleManagerPage = () => {
   const router = useRouter();
   const { id } = useParams();
 
-  const [selectedImage, setSelectedImage] = useState('/images/noavtar.png');
+  const [selectedImage, setSelectedImage] = useState("/images/noavtar.png");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    contact: '',
-    address: '',
-    age: '',
-    gender: '',
-    speciality: '',
-    salary: '',
-    aadharNo: '',
-    joiningDate: '',
-    // managerID: '', // Initialize managerID in state
+    fullName: "",
+    email: "",
+    password: "",
+    contact: "",
+    address: "",
+    age: "",
+    gender: "",
+    salary: "",
+    aadharNo: "",
+    joiningDate: "",
   });
 
   const handleImageChange = (event) => {
@@ -45,34 +42,27 @@ const SingleManagerPage = () => {
 
   useEffect(() => {
     if (!id) return;
-    console.log(id);
 
     const fetchManagerDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/owner/manager/${id}`,
-          { withCredentials: true }
-        );
-
-        console.log('manager details', response.data.manager)
+        const response = await axios.get(`http://localhost:3001/owner/manager/${id}`, {
+          withCredentials: true,
+        });
 
         if (response.data) {
           setFormData({
             fullName: response.data.manager.fullName || "",
             email: response.data.manager.email || "",
-            password: "", // Set password empty as it's not being fetched
+            password: "",
             contact: response.data.manager.contact || "",
             address: response.data.manager.address || "",
             age: response.data.manager.age || "",
             gender: response.data.manager.gender || "",
-            status: response.data.manager.status || 'active',
-            aadharNo: response.data.manager.aadharNo || '',
+            aadharNo: response.data.manager.aadharNo || "",
             salary: response.data.manager.salary || "",
             joiningDate: response.data.manager.joiningDate
-              ? new Date(response.data.manager.joiningDate).toISOString().split('T')[0]
-              : "", // Ensure the date is in 'YYYY-MM-DD' format
-
-            // managerID: response.data.manager.managerID || "",
+              ? new Date(response.data.manager.joiningDate).toISOString().split("T")[0]
+              : "",
           });
         }
       } catch (error) {
@@ -81,24 +71,20 @@ const SingleManagerPage = () => {
         setLoading(false);
       }
     };
+
     fetchManagerDetails();
   }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(id);
 
     try {
-      const response = await axios.post(
-        'http://localhost:3001/owner/manager/update',
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post("http://localhost:3001/owner/manager/update", formData, {
+        withCredentials: true,
+      });
 
       if (response.status === 200) {
-        router.push('/dashboard-admin/manager');
+        router.push("/dashboard-admin/manager");
         alert("Manager Updated Successfully");
       }
     } catch (error) {
@@ -106,119 +92,114 @@ const SingleManagerPage = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div className="text-white p-4">Loading...</div>;
+  if (error) return <div className="text-red-500 p-4">{error}</div>;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.infoContainer}>
-        <div className={styles.imgContainer}>
-          <Image
-            src={selectedImage}
-            alt="User Avatar"
-            layout="fill"
-            objectFit="cover"
+    <div className="min-h-screen bg-[#030712] text-white px-4 py-10 flex items-center justify-center">
+      <div className="w-full max-w-5xl bg-gray-900 rounded-xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Image Section */}
+        <div className="flex flex-col items-center justify-center space-y-6">
+          <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-white">
+            <Image src={selectedImage} alt="User Avatar" layout="fill" objectFit="cover" />
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+            id="file-upload"
           />
+          <label
+            htmlFor="file-upload"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg cursor-pointer"
+          >
+            Upload Avatar
+          </label>
         </div>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className={styles.uploadInput}
-          id="file-upload"
-        />
-        <label htmlFor="file-upload" className={styles.customFileUpload}>
-          Choose File
-        </label>
-        <div className={styles.formContainer}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <label>Full Name <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Full Name"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-              disabled
-            />
-            <label>Email <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              disabled
-            />
-            <label>Contact <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="text"
-              name="contact"
-              pattern="\d{10}"
-              placeholder="10-digit contact number"
-              value={formData.contact}
-              onChange={handleChange}
-              required
-            />
-            <label>Address <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-            <label>Age<span className={styles.requiredStar}>*</span></label>
-            <input
-              type="text"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              required
-            />
-            <label>Salary(₹) <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="number"
-              name="salary"
-              min="0"
-              step="500"
-              value={formData.salary}
-              onChange={handleChange}
-              required
-            />
-            <label>Aadhar Number <span className={styles.requiredStar}>*</span></label>
-            <input
-              type="text"
-              name="aadharNo"
-              value={formData.aadharNo}
-              onChange={handleChange}
-              pattern="\d{12}"
-              placeholder="12-digit Aadhar Number"
-              required
-              disabled
-            />
-            <div className={styles.dateTotalContainer}>
-            <div>
-                <label htmlFor="joiningDate">Joining Date</label>
-                <input
-                  type="date"
-                  id="joiningDate"
-                  name="joiningDate"
-                  value={formData.joiningDate}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+
+        {/* Form Section */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {[
+            { label: "Full Name", name: "fullName", type: "text", disabled: true },
+            { label: "Email", name: "email", type: "email", disabled: true },
+            { label: "Contact", name: "contact", type: "text", pattern: "\\d{10}", placeholder: "10-digit contact number" },
+            { label: "Address", name: "address", type: "text" },
+            { label: "Age", name: "age", type: "number" },
+            { label: "Salary (₹)", name: "salary", type: "number", min: "0", step: "500" },
+            { label: "Aadhar Number", name: "aadharNo", type: "text", pattern: "\\d{12}", placeholder: "12-digit Aadhar Number", disabled: true },
+          ].map((field) => (
+            <div key={field.name}>
+              <label className="block mb-1">
+                {field.label} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type={field.type}
+                name={field.name}
+                value={formData[field.name]}
+                onChange={handleChange}
+                placeholder={field.placeholder || ""}
+                pattern={field.pattern}
+                min={field.min}
+                step={field.step}
+                disabled={field.disabled}
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
             </div>
-            <button type="submit" className={styles.updateButton}>Submit</button>
-          </form>
-        </div>
+          ))}
+
+          {/* Password Field */}
+          <div>
+            <label className="block mb-1">
+              Password <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                minLength={8}
+                pattern="(?=.*[a-zA-Z])(?=.*[0-9]).{8,}"
+                title="Password must be at least 8 characters long and contain at least one letter and one number."
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+              <span
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-300 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </span>
+            </div>
+          </div>
+
+          {/* Joining Date */}
+          <div>
+            <label className="block mb-1">
+              Joining Date <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="date"
+              name="joiningDate"
+              value={formData.joiningDate}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-4">
+            <button
+              type="submit"
+              className="w-full bg-green-600 hover:bg-green-700 transition-colors text-white font-semibold py-2 px-4 rounded-lg"
+            >
+              Update Manager
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
