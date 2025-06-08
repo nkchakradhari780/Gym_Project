@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import axios from "axios";
-import styles from "@/app/ui/dashboard/equipments/addEqui/addEqui.module.css";
 import Link from "next/link";
 
 const AddEquiPage = () => {
@@ -75,7 +74,7 @@ const AddEquiPage = () => {
       setError(""); // Clear any previous error
     } catch (err) {
       setError("Error Adding Equipment");
-      setSuccess(false); // Hide success message if there was an error
+      setSuccess(false);
       console.error(
         "Process Failed:",
         err.response ? err.response.data : err.message
@@ -89,12 +88,14 @@ const AddEquiPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.infoContainer}>
-        <div className={styles.formContainer}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <label>
-              Equipment ID <span className={styles.requiredStar}>*</span>
+    <div className="min-h-screen bg-black text-white px-4 py-10 flex items-center justify-center">
+      <div className="w-full max-w-5xl bg-gray-950 rounded-xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Left side could be an image or info, but for simplicity, form spans whole */}
+        <form onSubmit={handleSubmit} className="space-y-6 col-span-full">
+          {/* Equipment ID */}
+          <div>
+            <label className="block mb-1">
+              Equipment ID <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -102,10 +103,14 @@ const AddEquiPage = () => {
               value={formData.id}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <label>
-              Equipment Name <span className={styles.requiredStar}>*</span>
+          {/* Equipment Name */}
+          <div>
+            <label className="block mb-1">
+              Equipment Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -113,16 +118,21 @@ const AddEquiPage = () => {
               value={formData.name}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <label>
-              Type <span className={styles.requiredStar}>*</span>
+          {/* Type */}
+          <div>
+            <label className="block mb-1">
+              Type <span className="text-red-500">*</span>
             </label>
             <select
               name="type"
               value={formData.type}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>
                 Select Type
@@ -133,17 +143,24 @@ const AddEquiPage = () => {
               <option value="Balance">Balance</option>
               <option value="Other">Other</option>
             </select>
+          </div>
 
-            <label>Brand</label>
+          {/* Brand */}
+          <div>
+            <label className="block mb-1">Brand</label>
             <input
               type="text"
               name="brand"
               value={formData.brand}
               onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <label>
-              Purchase Date <span className={styles.requiredStar}>*</span>
+          {/* Purchase Date */}
+          <div>
+            <label className="block mb-1">
+              Purchase Date <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
@@ -151,10 +168,14 @@ const AddEquiPage = () => {
               value={formData.purchaseDate}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <label>
-              Purchase Price (₹) <span className={styles.requiredStar}>*</span>
+          {/* Purchase Price */}
+          <div>
+            <label className="block mb-1">
+              Purchase Price (₹) <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
@@ -163,24 +184,33 @@ const AddEquiPage = () => {
               value={formData.purchasePrice}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <label>Maintenance Date</label>
+          {/* Maintenance Date */}
+          <div>
+            <label className="block mb-1">Maintenance Date</label>
             <input
               type="date"
               name="maintenanceDate"
               value={formData.maintenanceDate}
               onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <label>
-              Condition <span className={styles.requiredStar}>*</span>
+          {/* Condition */}
+          <div>
+            <label className="block mb-1">
+              Condition <span className="text-red-500">*</span>
             </label>
             <select
               name="condition"
               value={formData.condition}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>
                 Select Condition
@@ -190,15 +220,19 @@ const AddEquiPage = () => {
               <option value="Fair">Fair</option>
               <option value="Poor">Poor</option>
             </select>
+          </div>
 
-            <label>
-              Location <span className={styles.requiredStar}>*</span>
+          {/* Location */}
+          <div>
+            <label className="block mb-1">
+              Location <span className="text-red-500">*</span>
             </label>
             <select
               name="location"
               value={formData.location}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>
                 Select Location
@@ -214,28 +248,40 @@ const AddEquiPage = () => {
               <option value="Locker Room">Locker Room</option>
               <option value="Reception">Reception</option>
             </select>
+          </div>
 
-            <label>Status</label>
+          {/* Status */}
+          <div>
+            <label className="block mb-1">Status</label>
             <select
               name="status"
               value={formData.status}
               onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Available">Available</option>
               <option value="In Use">In Use</option>
               <option value="Under Maintenance">Under Maintenance</option>
               <option value="Out of Order">Out of Order</option>
             </select>
+          </div>
 
-            <label>Description</label>
+          {/* Description */}
+          <div>
+            <label className="block mb-1">Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows={3}
             />
+          </div>
 
-            <label>
-              Quantity <span className={styles.requiredStar}>*</span>
+          {/* Quantity */}
+          <div>
+            <label className="block mb-1">
+              Quantity <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
@@ -244,35 +290,65 @@ const AddEquiPage = () => {
               value={formData.quantity}
               onChange={handleChange}
               required
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
 
-            <button type="submit" className={styles.submitButton}>
+          {/* Buttons */}
+          <div className="pt-4 flex gap-4 justify-end">
+            <button
+              type="submit"
+              className="bg-green-600 hover:bg-green-700 transition-colors text-white font-semibold py-2 px-6 rounded-lg"
+            >
               Submit
             </button>
             <Link href="/dashboard-admin/equipments">
-              <button type="button" className={styles.cancelButton}>
+              <button
+                type="button"
+                className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg"
+              >
                 Cancel
               </button>
             </Link>
-          </form>
-        </div>
+          </div>
+        </form>
+
+        {/* Popup for success */}
+        {success && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            onClick={closePopup}
+          >
+            <div className="bg-green-600 text-white p-6 rounded-xl shadow-lg max-w-xs text-center">
+              <p className="mb-4 font-semibold">Equipment added successfully!</p>
+              <button
+                onClick={closePopup}
+                className="bg-white text-green-700 font-semibold px-4 py-2 rounded hover:bg-gray-100"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Popup for error */}
+        {error && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            onClick={closePopup}
+          >
+            <div className="bg-red-600 text-white p-6 rounded-xl shadow-lg max-w-xs text-center">
+              <p className="mb-4 font-semibold">{error}</p>
+              <button
+                onClick={closePopup}
+                className="bg-white text-red-700 font-semibold px-4 py-2 rounded hover:bg-gray-100"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Popup for success */}
-      {success && (
-        <div className={styles.popup} onClick={closePopup}>
-          <p>Equipment added successfully!</p>
-          <button onClick={closePopup}>Close</button>
-        </div>
-      )}
-
-      {/* Popup for error */}
-      {error && (
-        <div className={styles.popup} onClick={closePopup}>
-          <p>{error}</p>
-          <button onClick={closePopup}>Close</button>
-        </div>
-      )}
     </div>
   );
 };
